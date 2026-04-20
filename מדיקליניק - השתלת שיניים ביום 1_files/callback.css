@@ -1,0 +1,234 @@
+  .glyphicon-refresh-animate {
+          max-width: 15px;max-height: 13px;
+          position: relative;
+          top: 1px;
+          display: inline-block;
+          font-style: normal;
+          font-weight: normal;
+          line-height: 1;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        -animation: spin .7s infinite linear;
+        -webkit-animation: spin2 .7s infinite linear;
+    }
+    @-webkit-keyframes spin2 {
+        from { -webkit-transform: rotate(0deg);}
+        to { -webkit-transform: rotate(360deg);}
+    }
+    @keyframes spin {
+        from { transform: scale(1) rotate(0deg);}
+        to { transform: scale(1) rotate(360deg);}
+    }
+    .lcbn-pop-wrap {
+      position: fixed;
+      overflow: hidden;
+      /*top: 10%;*/
+      right: 10%;
+      bottom: 85px;
+      /*left: 10%;*/
+      width: 500px;
+      padding: 20px 50px;
+      display: block;
+      border-radius: 4px;
+      transform: translateY(20px);
+      transition: all 0.5s;
+      visibility: hidden;
+      border-radius: 4px;
+    }
+    .lcbn-pop-wrap .lcbn-pop-content {
+      opacity: 0;
+    }
+    .lcbn-pop-wrap:before {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      background: white;
+      content: "";
+      bottom: 10px;
+      left: 50%;
+      top: 95%;
+      color: #fff;
+      border-radius: 50%;
+      -webkit-transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
+      transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+    .lcbn-pop-wrap.active {
+      display: block;
+      visibility: visible;
+      box-shadow: 2px 3px 16px silver;
+      transition: all 600ms;
+      transform: translateY(0px);
+      transition: all 0.5s;
+      z-index: 99999999;
+    }
+    .lcbn-pop-wrap.active:before {
+      height: 2000px;
+      width: 2000px;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      margin-left: -1000px;
+      margin-top: -1000px;
+      display: block;
+      -webkit-transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
+      transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+    .lcbn-pop-wrap.active .lcbn-pop-content {
+      position: relative;
+      z-index: 1;
+      opacity: 1;
+      transition: all 600ms cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    }
+  a#phonebt {
+    min-width: 50px;
+  } 
+    a.lcbn-pop.button {
+      padding: 0;
+      outline: none;
+      border-radius: 50%;
+      background: rgb(247, 162, 34);
+      color: #fff;
+      font-size: 24px;
+      text-decoration: none;
+      display: block;
+      position: fixed;
+      left: 90%;
+      bottom: 20px;
+      top: auto;
+      margin-left: -25px;
+      transition: transform 0.25s;
+      z-index: 99999999;
+      height: 50px;
+      width: 50px;
+      line-height: 50px;
+      text-align: center;
+    }
+    a.lcbn-pop.button:hover {
+      opacity: 0.8;
+    }
+    a.lcbn-pop.button.active {
+      transform: rotate(135deg);
+      transition: transform 0.5s;
+    }
+    .lcbn-pop-wrap #submitbtn {
+      border-radius: 3px;
+      padding: 10px 20px;
+      color: #fff;
+      background: rgb(247, 162, 34);
+      border-style: solid;
+      margin-top: 20px;
+      font-size:17px;
+      font-weight:bold;
+      border-color:rgb(247, 162, 34);
+    }
+    #submitbtn:focus {
+        outline: none;
+        -webkit-box-shadow: 0px 0px 0px 3px #2b72ee;
+        -moz-box-shadow: 0px 0px 0px 3px #2b72ee;
+        box-shadow: 0px 0px 0px 3px #2b72ee;
+    }
+    #boxclose:focus {
+        outline: none;
+        -webkit-box-shadow: 0px 0px 0px 1px #000;
+        -moz-box-shadow: 0px 0px 0px 1px #000;
+        box-shadow: 0px 0px 0px 1px #000;
+    }
+    a#phonebt:focus {
+        outline: none;
+        -webkit-box-shadow: 0px 0px 0px 3px #000;
+        -moz-box-shadow: 0px 0px 0px 3px #000;
+        box-shadow: 0px 0px 0px 3px #000;
+        
+    }
+    .lcbn-pop-wrap #Phone-group input {
+      border-radius: 3px;
+      border: 1px solid rgb(247, 162, 34);
+    }
+    .lcbn-pop-wrap #Phone-group input:focus {
+        outline: none;
+        box-shadow: 0px 0px 8px #1a8cff;
+        
+    }
+    @font-face {
+        font-family: 'Glyphicons Halflings';
+        src: url('//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/fonts/glyphicons-halflings-regular.eot');
+        src: url('//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),
+                url('//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/fonts/glyphicons-halflings-regular.woff2') format('woff2'),
+                url('//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/fonts/glyphicons-halflings-regular.woff') format('woff'),
+                url('//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/fonts/glyphicons-halflings-regular.ttf') format('truetype'),
+                url('//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/fonts/glyphicons-halflings-regular.svg#fontawesomeregular') format('svg');
+        font-weight: normal;
+        font-style: normal;
+    font-size:17px;
+    }
+    .jk-phone:before {content: "\e182";font-family: 'Glyphicons Halflings';}
+    .jk-reload:before {content: "\e031";font-family: 'Glyphicons Halflings';}
+    a.boxclose{
+        float:right;
+        width:26px;
+        height:26px;
+        background:transparent url(cancel.png) repeat top left;
+        margin-top:-14px;
+        margin-right:-45px;
+        cursor:pointer;
+      z-index: 9999999999;
+    }
+    @media only screen and (min-width: 169px) and (max-width: 768px){
+        .mobile-phone-btn {
+            display: block!important;
+        }
+        .desktop-phone-btn {
+            display: none!important;
+        }
+        #mobile-btn {
+            display:block;
+            
+
+        }
+
+        a.lcbn-pop.button {
+          left: 10% !important;
+        }
+    }
+    @media only screen and (min-width: 769px){
+        .desktop-phone-btn {
+            display: block!important;
+        }
+        #mobile-btn {
+            display:none;
+        }
+        .mobile-phone-btn {
+            display: none!important;
+        }
+
+    }
+    h2#callbacktitle {
+        font-size: 22px;
+        margin-top: 4px;
+        margin-bottom: 8px;
+        padding: 0px;
+        
+    }
+    label#callbackdescr{
+        font-weight: 600;
+        font-size: 15px;
+        color: #595959;
+    }
+.form-control{
+        display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.428571429;
+    color: #555;
+    vertical-align: middle;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+    -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
