@@ -1175,7 +1175,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const bumpSubmitCount = () => sessionStorage.setItem('mc_sc', getSubmitCount() + 1);
 
     const initAllForms = () => {
-        const WEBHOOK_URL = 'https://hooks.zapier.com/hooks/catch/1070512/orsvzq8/';
+        const WEBHOOK_URL = '/api/submit';
         const RECAPTCHA_SITE_KEY = '6LeE2mQpAAAAAOkWzXym16lXNbaiYazzBQtXLz-T';
         const getParam = (n) => new URLSearchParams(window.location.search).get(n) || "";
         const generateEventID = () => 'mc_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
