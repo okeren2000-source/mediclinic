@@ -4,6 +4,8 @@ const ALLOWED_ORIGINS = [
 ];
 
 const ZAPIER_WEBHOOK = 'https://hooks.zapier.com/hooks/catch/1070512/orsvzq8/';
+const RECAPTCHA_SECRET = process.env.RECAPTCHA_SECRET_KEY;
+const RECAPTCHA_SCORE_THRESHOLD = 0.5;
 
 export default async function handler(req, res) {
   const origin = req.headers.origin || '';
@@ -26,10 +28,22 @@ export default async function handler(req, res) {
     return res.status(403).json({ error: 'Forbidden' });
   }
 
+  const { recaptcha_token, ...rest } = req.body;
+
+  const verifyRes = await fetch(
+    `https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET}&response=${recaptcha_token}`,
+    { method: 'POST' }
+  );
+  const captcha = await verifyRes.json();
+
+  if (!captcha.success || captcha.score < RECAPTCHA_SCORE_THRESHOLD) {
+    return res.status(400).json({ error: 'reCAPTCHA verification failed' });
+  }
+
   const zapierRes = await fetch(ZAPIER_WEBHOOK, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(req.body),
+    body: JSON.stringify(rest),
   });
 
   if (!zapierRes.ok) {
