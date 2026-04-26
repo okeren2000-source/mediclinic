@@ -316,9 +316,16 @@ src="https://www.facebook.com/tr?id=809466189143233&ev=PageView&noscript=1"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <script>
-  window.onload = setGclidValue;
+  (function() {
+    var campaign = new URLSearchParams(window.location.search).get('utm_campaign') || '';
+    if (campaign.indexOf('Pmx') === -1) {
+      window.onload = setGclidValue;
+      var s = document.createElement('script');
+      s.src = 'https://sites.leader.online/pixel/lp.lasertips.co.il/leader.js';
+      document.body.appendChild(s);
+    }
+  })();
 </script>
-<script src="https://sites.leader.online/pixel/lp.lasertips.co.il/leader.js"></script>
 
 <main class="sticky-block-header">
 
