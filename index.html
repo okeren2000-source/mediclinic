@@ -320,10 +320,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 -->
 
 <script>
+  window.onload = setGclidValue;
+</script>
+<script>
   (function() {
     var campaign = new URLSearchParams(window.location.search).get('utm_campaign') || '';
     if (!/pmx|pmax/i.test(campaign)) {
-      window.onload = setGclidValue;
       var s = document.createElement('script');
       s.src = 'https://sites.leader.online/pixel/lp.lasertips.co.il/leader.js';
       document.body.appendChild(s);
