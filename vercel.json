@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/mediclinic-lng", "destination": "/" },
+    { "source": "/mediclinic-lng/", "destination": "/" }
+  ]
+}
