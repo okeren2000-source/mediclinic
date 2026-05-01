@@ -326,7 +326,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script>
   (function() {
     var campaign = new URLSearchParams(window.location.search).get('utm_campaign') || '';
-    if (!/pmx|pmax/i.test(campaign)) {
+    var day = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Jerusalem' })).getDay();
+    var isWeekend = (day === 5 || day === 6); // 5=Friday, 6=Saturday
+    if (!/pmx|pmax/i.test(campaign) && !isWeekend) {
       var s = document.createElement('script');
       s.src = 'https://sites.leader.online/pixel/lp.lasertips.co.il/leader.js';
       document.body.appendChild(s);
