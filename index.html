@@ -1250,7 +1250,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 }
             });
 
-            form.onsubmit = async function(e) {
+            form.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 if (getSubmitCount() >= 2 || (Date.now() - formLoadTime < 4000) || honey.value !== "") {
                     form.style.display = 'none';
@@ -1307,7 +1307,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         fbq('track', 'Lead', { content_name: 'Mediclinic' }, { eventID: eventID });
                     }
                 });
-            };
+            }, { capture: true });
+            form.submit = function() { return false; };
         });
     };
     window.addEventListener('load', initAllForms);
