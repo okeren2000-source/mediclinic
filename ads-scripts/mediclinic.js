@@ -455,6 +455,14 @@ function analyzeWithGeminiFallback(terms) {
 // הוספת מילות שלילה לרשימה Ai>>Negatives>>Automated
 // מקבלת מערך של אובייקטים: [{term, root_term}, ...]
 // ============================================================
+
+// מילה בודדת → exact match [מילה], כדי שלא תחסום ביטויים מורכבים שמכילים אותה.
+// מילים מרובות → phrase match "ביטוי".
+function formatNegativeKw(text) {
+  var t = text.trim();
+  return t.split(/\s+/).length === 1 ? '[' + t + ']' : '"' + t + '"';
+}
+
 function addNegativeKeywords(rejectResults) {
   const listIterator = AdsApp.negativeKeywordLists()
     .withCondition("Name = '" + CONFIG.NEGATIVE_LIST_NAME + "'")
@@ -476,21 +484,21 @@ function addNegativeKeywords(rejectResults) {
     const wordCount = term.trim().split(/\s+/).length;
 
     if (wordCount <= MAX_WORDS) {
-      toAdd.add('"' + term.trim() + '"');
+      toAdd.add(formatNegativeKw(term));
     } else {
       if (rootTerm && rootTerm.length > 0) {
-        toAdd.add('"' + rootTerm + '"');
+        toAdd.add(formatNegativeKw(rootTerm));
         Logger.log('Long term (' + wordCount + ' words), using root_term: ' + rootTerm);
       } else {
         const firstThree = term.trim().split(/\s+/).slice(0, 3).join(' ');
-        toAdd.add(firstThree);
+        toAdd.add(formatNegativeKw(firstThree));
         Logger.log('Long term, no root_term, using first 3 words: ' + firstThree);
       }
     }
 
     // תמיד הוסף root_term בנפרד אם קיים ושונה מהמונח המלא
     if (rootTerm && rootTerm.length > 0 && rootTerm !== term.trim()) {
-      toAdd.add('"' + rootTerm + '"');
+      toAdd.add(formatNegativeKw(rootTerm));
     }
   });
 
