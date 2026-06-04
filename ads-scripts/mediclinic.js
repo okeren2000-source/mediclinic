@@ -12,7 +12,7 @@
 // הגדרות - שנה כאן בלבד
 // ============================================================
 const CONFIG = {
-  GEMINI_API_KEY: 'AIzaSyD5ORd0n1Gs3INF6sdPlLDhJnwB-dq-mBc',
+  GEMINI_API_KEY: PropertiesService.getScriptProperties().getProperty('GEMINI_API_KEY') || '',
   GEMINI_MODEL: 'gemini-2.5-flash-lite',
   GEMINI_FALLBACK_MODEL: 'gemini-2.5-flash',
   NEGATIVE_LIST_NAME: 'Ai>>Negatives>>Automated',
