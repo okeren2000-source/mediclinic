@@ -1279,6 +1279,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 const eventID = generateEventID();
                 const timestamp = Math.floor(Date.now() / 1000);
                 const currentFbclid = wrapper.querySelector('.kl-fbclid-val').value || getParam('fbclid');
+                if (typeof fbq === 'function') {
+                    fbq('track', 'Lead', { content_name: 'Mediclinic' }, { eventID: eventID });
+                }
                 const data = {
                     full_name: nameInp.value,
                     phone_number: phoneInp.value,
@@ -1305,9 +1308,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         if (p.startsWith('0')) p = '972' + p.substring(1);
                         gtag('set', 'user_data', { 'phone_number': '+' + p });
                         gtag('event', 'conversion', {'send_to': 'AW-945448113/IsHACIHe51wQscnpwgM'});
-                    }
-                    if (typeof fbq === 'function') {
-                        fbq('track', 'Lead', { content_name: 'Mediclinic' }, { eventID: eventID });
                     }
                 });
             }, { capture: true });
