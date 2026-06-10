@@ -1280,7 +1280,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 const timestamp = Math.floor(Date.now() / 1000);
                 const currentFbclid = wrapper.querySelector('.kl-fbclid-val').value || getParam('fbclid');
                 if (typeof fbq === 'function') {
-                    fbq('track', 'Lead', { content_name: 'Mediclinic' }, { eventID: eventID });
+                    fbq('trackCustom', 'Track_Mediclinic', { content_name: 'Mediclinic' }, { eventID: eventID });
                 }
                 const data = {
                     full_name: nameInp.value,
