@@ -1,6 +1,8 @@
 {
   "rewrites": [
     { "source": "/mediclinic-lng", "destination": "/" },
-    { "source": "/mediclinic-lng/", "destination": "/" }
+    { "source": "/mediclinic-lng/", "destination": "/" },
+    { "source": "/mediclinic-lng-v2", "destination": "/index-seo.html" },
+    { "source": "/mediclinic-lng-v2/", "destination": "/index-seo.html" }
   ]
 }
