@@ -62,10 +62,13 @@ const GEMINI_SYSTEM_PROMPT = `אתה מנהל קמפיינים של Google Ads �
 - רומן אציל, ד"ר רומן אציל, roman atzil - הרופא הראשי במרפאה - תמיד APPROVE, לעולם לא root_term!
 - ביקורות, דירוגים, מידע על מדיקליניק - תמיד APPROVE!
 - "בהרדמה כללית" / "הרדמה כללית" בהקשר של טיפול שיניים - רלוונטי!
+- המלצות לרופא/מרפאת שיניים — "המלצות לרופאי שיניים", "המלצה לרופא שיניים", "רופא שיניים מומלץ" - תמיד APPROVE, גם ללא ציון עיר. חיפוש המלצה מרמז על כוונה לבחור רופא איכותי ולא רק פתרון זמין
+- רופא/מרפאת שיניים עם תיאור איכות (טוב, מומלץ, מקצועי) בשילוב עם גיאוגרפיה רלוונטית - APPROVE (לדוג: "רופא שיניים טוב בתל אביב")
+- מרפאת שיניים פרטית בשילוב עם גיאוגרפיה רלוונטית - APPROVE (לדוג: "מרפאות שיניים פרטיות תל אביב") - מרמז על נכונות לשלם פרטי, רלוונטי למרפאה פרטית
 
 === חוקי REJECT ===
 פסול כאשר המונח אינו מכיל כוונה מפורשת להשתלות שיניים, שיקום הפה, או טיפולים כירורגיים מורכבים. ספק ספיקות — פסול!
-- **חיפוש כללי של רופא/מרפאת שיניים ללא כוונה לטיפול מורכב** — "מרפאת שיניים בתל אביב", "רופא שיניים בחולון", "מרפאת שיניים" סתם, "רופא שיניים קרוב" — REJECT. הכוונה לשירות שיניים כללי אינה מספיקה, גם אם הגיאוגרפיה רלוונטית
+- **חיפוש כללי של רופא/מרפאת שיניים ללא כוונה לטיפול מורכב** — "מרפאת שיניים בתל אביב", "רופא שיניים בחולון", "מרפאת שיניים" סתם, "רופא שיניים קרוב" — REJECT. הכוונה לשירות שיניים כללי אינה מספיקה, גם אם הגיאוגרפיה רלוונטית. חריג: המלצות/איכות ("מומלץ"/"טוב") או "פרטי" - ראה חוקי APPROVE למעלה
 - **גיאוגרפיה ללא כוונה לטיפול מורכב** — "רופא שיניים בחולון", "מרפאת שיניים בתל אביב" — REJECT. גיאוגרפיה רלוונטית לבדה אינה מספיקה לאישור; חייב להיות שילוב עם מונח השתלה/שיקום מפורש
 - **אסתטיקה דנטלית כללית** — "אסתטיקה דנטלית", "מומחה לאסתטיקה דנטלית", "רופא שיניים אסתטי" — REJECT. ציפויים/כתרים ייאושרו רק כשמופיעים במפורש בהקשר של שיקום הפה המלא
 - טיפולים קטנים/בסיסיים בלבד: שיננית, ניקוי שיניים, לבנת שיניים, סתימה, טיפול שורש (ללא קשר להשתלה), צילום שיניים, רנטגן שיניים, פנורמי שיניים
@@ -87,18 +90,18 @@ const GEMINI_SYSTEM_PROMPT = `אתה מנהל קמפיינים של Google Ads �
 - ילדים/רפואת שיניים לילדים
 - תוכן שאינו קשור לרפואת שיניים כלל
 
-=== חוקי root_term ===
-עבור כל מונח שהחלטת REJECT, עליך לספק גם root_term:
-- root_term הוא הביטוי הקצר ביותר (1-3 מילים) שכדאי לשלול בנפרד
-- אם הסיבה לפסילה היא עיר לא רלוונטית: root_term = שם העיר בלבד (לדוג: "חיפה")
-- אם הסיבה היא שם רופא/מרפאה מתחרה: root_term = שם הרופא/המרפאה
-- אם הסיבה היא טיפול לא רלוונטי: root_term = שם הטיפול (לדוג: "שיננית")
-- אם הסיבה היא קופח כללית: root_term = "כללית קופח" - לעולם לא "כללית" לבד!
-- אם הסיבה היא קופח מכבי/מאוחדת: root_term = "מכבי" או "מאוחדת" בהתאמה
-- אם הסיבה היא ביטוח לא רלוונטי (הראל/מגדל/איילון/לאומית): root_term = שם חברת הביטוח (לדוג: "הראל", "מגדל")
-- אם אין root_term ספציפי (כל הביטוי פסול באותה מידה): החזר root_term = ""
+=== חוקי root_term ו-root_category ===
+עבור כל מונח שהחלטת REJECT, ספק גם root_term ו-root_category. **ברירת המחדל היא לא לייצר root_term** - הוא נוצר רק בשלושה מקרים:
+
+1. שם רופא/מרפאה מתחרה → root_category = "competitor", root_term = שם הרופא/המרפאה בלבד (1-3 מילים)
+2. עיר לא רלוונטית גיאוגרפית → root_category = "city", root_term = שם העיר בלבד (לדוג: "חיפה")
+3. מונח חיפוש עם 10 מילים ומעלה → root_category = "long", root_term = ביטוי קצר (1-3 מילים) שמייצג את סיבת הפסילה, לצורך שלילה טכנית של המונח הארוך - אלא אם אין ביטוי כזה שלא כולל מילים טובות (ראה למטה), ואז root_term = ""
+
+בכל שאר המקרים (טיפול לא רלוונטי, ביטוח, קופת חולים, זמינות/חירום וכו') → root_category = "none" ו-root_term = "" - **אין לייצר root_term בכלל**, גם אם ניתן היה לזהות ביטוי קצר לשלילה.
+
 - חשוב: root_term לעולם לא יכלול מילים טובות כמו: השתלה, שתל, שיניים, טיפול, מרפאה, רופא, שיקום, הפניקס, מדיקליניק, כללית (לבד!), פה ולסת, סדציה, זרקוניה, בייקון, השלמת שיניים, רומן אציל, בת ים, תותבת, תותבות
-- בת ים: עיר רלוונטית גיאוגרפית - לעולם לא root_term! אם מונח נפסל בגלל סיבה אחרת (מתחרה, טיפול לא רלוונטי) ובת ים מופיעה בו - root_term = הסיבה האחרת, לא "בת ים"
+- בת ים: עיר רלוונטית גיאוגרפית - לעולם לא root_term! אם מונח נפסל בגלל סיבה אחרת (מתחרה) ובת ים מופיעה בו - root_term = שם המתחרה, לא "בת ים"
+- אם המונח בן 10 מילים ומעלה וגם מכיל שם מתחרה או עיר לא רלוונטית - סווג לפי הסיבה המתאימה (competitor/city), לא כ-"long"
 
 החזר תשובה בפורמט JSON בלבד:
 {
@@ -107,7 +110,8 @@ const GEMINI_SYSTEM_PROMPT = `אתה מנהל קמפיינים של Google Ads �
       "term": "מילת החיפוש המקורית",
       "decision": "APPROVE" או "REJECT",
       "reason": "סיבה קצרה בעברית",
-      "root_term": "ביטוי שורש לשלילה או ריק אם אין"
+      "root_term": "ביטוי שורש לשלילה או ריק אם אין",
+      "root_category": "competitor" או "city" או "long" או "none"
     }
   ]
 }`;
@@ -178,7 +182,7 @@ function main() {
       allResults.push(r);
       if (r.decision === 'REJECT') {
         const wordCount = r.term.trim().split(/\s+/).length;
-        toReject.push({ term: r.term, root_term: r.root_term || '' });
+        toReject.push({ term: r.term, root_term: r.root_term || '', root_category: r.root_category || 'none' });
         // מונחים ארוכים מ-10 מילים נכנסים לזיכרון כדי לא לרוץ עליהם שוב
         if (wordCount > 10) {
           memory[r.term.toLowerCase().trim()] = 'REJECT_LONG';
@@ -456,11 +460,14 @@ function analyzeWithGeminiFallback(terms) {
 // מקבלת מערך של אובייקטים: [{term, root_term}, ...]
 // ============================================================
 
-// מילה בודדת → exact match [מילה], כדי שלא תחסום ביטויים מורכבים שמכילים אותה.
-// מילים מרובות → phrase match "ביטוי".
-function formatNegativeKw(text) {
-  var t = text.trim();
-  return t.split(/\s+/).length === 1 ? '[' + t + ']' : '"' + t + '"';
+// הפסילה של המונח עצמו - תמיד exact match [ביטוי].
+function formatExactMatch(text) {
+  return '[' + text.trim() + ']';
+}
+
+// רוט קיוורד (רשת רחבה יותר) - תמיד phrase match "ביטוי".
+function formatPhraseMatch(text) {
+  return '"' + text.trim() + '"';
 }
 
 function addNegativeKeywords(rejectResults) {
@@ -481,24 +488,26 @@ function addNegativeKeywords(rejectResults) {
   rejectResults.forEach(function(r) {
     const term = r.term || '';
     const rootTerm = (r.root_term || '').trim();
+    const rootCategory = r.root_category || 'none';
     const wordCount = term.trim().split(/\s+/).length;
 
+    // פסילת המונח עצמו - תמיד exact match.
+    // מונח ארוך מדי (>10 מילים) לא ניתן לשלול כפי שהוא - משתמשים ב-root_term כתחליף.
     if (wordCount <= MAX_WORDS) {
-      toAdd.add(formatNegativeKw(term));
+      toAdd.add(formatExactMatch(term));
+    } else if (rootTerm && rootTerm.length > 0) {
+      toAdd.add(formatExactMatch(rootTerm));
+      Logger.log('Long term (' + wordCount + ' words), using root_term: ' + rootTerm);
     } else {
-      if (rootTerm && rootTerm.length > 0) {
-        toAdd.add(formatNegativeKw(rootTerm));
-        Logger.log('Long term (' + wordCount + ' words), using root_term: ' + rootTerm);
-      } else {
-        const firstThree = term.trim().split(/\s+/).slice(0, 3).join(' ');
-        toAdd.add(formatNegativeKw(firstThree));
-        Logger.log('Long term, no root_term, using first 3 words: ' + firstThree);
-      }
+      const firstThree = term.trim().split(/\s+/).slice(0, 3).join(' ');
+      toAdd.add(formatExactMatch(firstThree));
+      Logger.log('Long term, no root_term, using first 3 words: ' + firstThree);
     }
 
-    // תמיד הוסף root_term בנפרד אם קיים ושונה מהמונח המלא
-    if (rootTerm && rootTerm.length > 0 && rootTerm !== term.trim()) {
-      toAdd.add(formatNegativeKw(rootTerm));
+    // רוט קיוורד נוסף (phrase match, רשת רחבה) - רק עבור מתחרה או עיר לא רלוונטית
+    if (rootTerm && rootTerm.length > 0 && (rootCategory === 'competitor' || rootCategory === 'city')) {
+      toAdd.add(formatPhraseMatch(rootTerm));
+      Logger.log('Root keyword (' + rootCategory + '): ' + rootTerm);
     }
   });
 
