@@ -55,6 +55,8 @@
     'security_storage': 'granted',
     'wait_for_update': 500
   });
+  gtag('set', 'ads_data_redaction', true);
+  gtag('set', 'url_passthrough', true);
 </script>
 
 <!-- Cookiebot -->
@@ -70,8 +72,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 -->
 
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-801835270"></script>
-<script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-801835270" data-cookieconsent="ignore"></script>
+<script data-cookieconsent="ignore">
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
