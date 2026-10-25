@@ -41,6 +41,19 @@
 }
 </script>
 
+<!-- Google Consent Mode default (must load before Cookiebot) -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied',
+    'wait_for_update': 500
+  });
+</script>
+
 <!-- Cookiebot -->
 <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="d81f7b65-2390-4199-a9f4-ffdf6871b28a" data-blockingmode="auto" type="text/javascript"></script>
 
@@ -322,6 +335,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .mc-error-box { color: #d93025; font-size: 14px; font-weight: bold; text-align: center; margin: 10px 0; display: none; background: #fce8e6; padding: 8px; border-radius: 4px; }
   .mc-step-hidden, .mc-thanks-msg { display: none; }
   .form-field-aux { opacity: 0; position: absolute; top: 0; left: 0; height: 0; width: 0; z-index: -1; overflow: hidden; }
+</style>
+<style>
+  /* Fix: h1>span gets display:block from the framework's global rule, causing
+     the three text segments to stack as separate blocks, making the header
+     overflow its allocated height and spill onto the image below.
+     Also tighten the desktop line-height (3.325rem was too loose). */
+  #element-1218 h1 > span { display: inline; }
+  #element-1218 h1 { line-height: 1.2; }
 </style>
 
 <!-- Meta Pixel Code -->
